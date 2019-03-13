@@ -9,16 +9,10 @@ function factorial(number) {
 // 2. Создать функцию multiply, которая будет принимать любое количество чисел и возвращать их произведение:
 // multiply(1,2,3) = 6 (1*2*3)
 // Если нет ни одного аргумента, вернуть ноль: multiply() // 0
-function multiply() {
-    if (!arguments.length)
+function multiply(...numbers) {
+    if (numbers.length == 0)
         return 0;
-    let a = 1;
-    for (let i = 0; i < arguments.length; i++) {
-        if (typeof arguments[i] === 'number') {
-            a *= arguments[i];
-        }
-    }
-    return a;
+    return numbers.reduce((a, b) => a * b);
 }
 // 3. Создать функцию, которая принимает строку и возвращает строку-перевертыш: reverseString(‘test’) // “tset”.
 function reverseString(str) {
@@ -56,7 +50,6 @@ class SettingsCar extends Car {
     }
     refuel() {
         this.fuel = 100;
-        return console.log('Вы заправились!');
     }
     // 7.Создать публичный get для получения свойств fuel и mileage.
     get viewFuel() {

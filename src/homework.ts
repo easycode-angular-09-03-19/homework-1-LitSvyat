@@ -12,18 +12,10 @@ function factorial(number: number):number {
 // multiply(1,2,3) = 6 (1*2*3)
 // Если нет ни одного аргумента, вернуть ноль: multiply() // 0
 
-function multiply():number {
-    if(!arguments.length)
-        return 0
+function multiply(...numbers: number[]): number {
+    if (numbers.length == 0) return 0;
 
-    let a:number = 1
-
-    for(let i = 0; i < arguments.length; i++){
-        if (typeof arguments[i] === 'number') {
-            a *= arguments[i];
-        }
-    }
-    return a;
+    return numbers.reduce((a, b) => a * b);
 }
 
 // 3. Создать функцию, которая принимает строку и возвращает строку-перевертыш: reverseString(‘test’) // “tset”.
@@ -39,7 +31,7 @@ interface AdminInterface {
     name: string;
     email: string;
     password: string;
-    readonly type: string;
+    readonly type?: string;
     
 }
 
@@ -48,7 +40,7 @@ class User implements AdminInterface {
     name: string;
     email: string;
     password: string;
-    readonly type: string;
+    readonly type?: string;
 
     constructor(name:string, email:string, password:string, type:string = 'Admin') {
         this.name = name;
@@ -74,8 +66,8 @@ abstract class Car {
         this.fuel = fuel;
     }
 
-    abstract drive(number);
-    abstract refuel(number);
+    public abstract drive(number):void;
+    public abstract refuel(number):void;
 }
 
 // 6.Наследоваться от абстрактного класса Car и реализовать методы абстрактного класса drive (ехать) и refuel (заправка).
@@ -85,7 +77,7 @@ abstract class Car {
 
 class SettingsCar extends Car {
     
-    drive(mile:number): void {
+   public drive(mile:number):void {
         if(isNaN(mile))
             return console.log('Введите числовое значение!');
         if(this.fuel <= 0) 
@@ -95,16 +87,15 @@ class SettingsCar extends Car {
         this.fuel - 10;
     }
 
-    refuel():void {
+    public refuel():void {
         this.fuel = 100;
-        return console.log('Вы заправились!')
     }
 
     // 7.Создать публичный get для получения свойств fuel и mileage.
-    public get viewFuel() {
+    public get viewFuel():number {
         return this.fuel
     }
-    public get viewMileage() {
+    public get viewMileage():number {
         return this.mileage
     }
 
